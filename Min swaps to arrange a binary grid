@@ -1,0 +1,28 @@
+class Solution:
+    def minSwaps(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+        last_one = []
+
+        for row in grid:
+            r = -1
+            for i in range(n - 1, -1, -1):
+                if row[i] == 1:
+                    r = i
+                    break
+            last_one.append(r)
+
+        swaps = 0
+
+        for i in range(n):
+            j = i
+            while j < n and last_one[j] > i:
+                j += 1
+            if j == n:
+                return -1
+            while j > i:
+                last_one[j], last_one[j - 1] = last_one[j - 1], last_one[j]
+                j -= 1
+                swaps += 1
+
+        return swaps
+        
